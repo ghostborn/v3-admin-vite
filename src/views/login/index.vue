@@ -1,5 +1,46 @@
 <script setup lang="ts">
-import {reactive,ref} from "vue"
+import { reactive, ref } from "vue"
+import type {FormInstance, FormRules} from "element-plus"
+import {User,Lock,Key,Picture,Loading} from "@element-plus/icons-vue";
+import type {LoginRequestData} from "@/api/login/types/login";
+
+/**登录表单元素的引用 */
+const loginFormRef = ref<FormInstance | null> (null)
+/**登录按钮 Loading */
+const loading = ref<boolean>(false)
+/**验证码图片 URL*/
+const codeUrl = ref<string>("")
+/**登录表单数据 */
+const loginFormData: LoginRequestData = reactive({
+  username: "admin",
+  password: "12345678",
+  code: ""
+})
+/** 登录表单校验规则 */
+const loginFormRules: FormRules = {
+  username: [{ required: true, trigger: "blur", message: "请输入您的用户名" }],
+  password: [{ required: true, trigger: "blur", message: "请输入您的密码" }, { min: 8, max: 20, message: "密码长度在 8 到 20 个字符", trigger: "blur" }],
+  code: [{ required: true, trigger: "blur", message: "请输入验证码" }]
+}
+/**登录逻辑 */
+const handleLogin = () => {
+  loginFormRef.value?.validate((valid:boolean,fields)=>{
+    if(valid) {
+      loading.value = true
+    }else{
+      console.error('表单校验失败',fields)
+    }
+  })
+}
+/**创建验证码 */
+const createCode = () => {
+  loginFormData.code = ''
+  codeUrl.value = ''
+}
+/**初始化验证码 */
+createCode()
+
+
 
 </script>
 
@@ -18,7 +59,7 @@ import {reactive,ref} from "vue"
             <el-input v-model="loginFormData.password" placeholder="密码" type="password" tabindex="2" :prefix-icon="Lock" size="large" show-password></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input v-model.trim="loginFormData.code" placeholder="placeholder" type="text" tabindex="3" :prefix-icon="key" maxlength="7" size="large">
+            <el-input v-model.trim="loginFormData.code" placeholder="验证码" type="text" tabindex="3" :prefix-icon="Key" maxlength="7" size="large">
               <template #append>
                 <el-image :src="codeUrl" @click="createCode" draggable="false">
                   <template #placeholder>
@@ -44,6 +85,53 @@ import {reactive,ref} from "vue"
   </div>
 </template>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100%;
+  .theme-switch {
+    position: fixed;
+    top: 5%;
+    right: 5%;
+    cursor: pointer;
+  }
+  .login-card {
+    width: 480px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #dcdfe6;
+    background-color: #fff;
+    overflow: hidden;
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+      img {
+        height: 100%;
+      }
+    }
+    .content {
+      padding: 20px 50px 50px 50px;
+      :deep(.el-input-group__append) {
+        padding: 0;
+        overflow: hidden;
+        .el-image {
+          width: 100px;
+          height: 40px;
+          border-left: 0px;
+          user-select: none;
+          cursor: pointer;
+          text-align: center;
+        }
+      }
+      .el-button {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+  }
+}
 </style>
