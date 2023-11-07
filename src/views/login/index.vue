@@ -3,6 +3,7 @@ import { reactive, ref } from "vue"
 import type {FormInstance, FormRules} from "element-plus"
 import {User,Lock,Key,Picture,Loading} from "@element-plus/icons-vue";
 import type {LoginRequestData} from "@/api/login/types/login";
+import {getLoginCodeApi} from "@/api/login";
 
 /**登录表单元素的引用 */
 const loginFormRef = ref<FormInstance | null> (null)
@@ -36,6 +37,9 @@ const handleLogin = () => {
 const createCode = () => {
   loginFormData.code = ''
   codeUrl.value = ''
+  getLoginCodeApi().then((res) => {
+    codeUrl.value = res.data
+  })
 }
 /**初始化验证码 */
 createCode()
