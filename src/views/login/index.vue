@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue"
+import {useRouter} from "vue-router"
+import {useUserStore} from "@/store/modules/user";
 import type {FormInstance, FormRules} from "element-plus"
 import {User,Lock,Key,Picture,Loading} from "@element-plus/icons-vue";
 import type {LoginRequestData} from "@/api/login/types/login";
 import {getLoginCodeApi} from "@/api/login";
 
+const router = useRouter()
 /**登录表单元素的引用 */
 const loginFormRef = ref<FormInstance | null> (null)
 /**登录按钮 Loading */
@@ -27,7 +30,21 @@ const loginFormRules: FormRules = {
 const handleLogin = () => {
   loginFormRef.value?.validate((valid:boolean,fields)=>{
     if(valid) {
+      console.log('111')
       loading.value = true
+      useUserStore()
+          .login(loginFormData)
+          .then(()=>{
+
+            router.push({path: '/'})
+          })
+          .catch(()=>{
+            createCode()
+            loginFormData.password = ''
+          })
+          .finally(()=>{
+            loading.value = false
+          })
     }else{
       console.error('表单校验失败',fields)
     }
@@ -62,7 +79,7 @@ createCode()
           <el-form-item prop="password">
             <el-input v-model="loginFormData.password" placeholder="密码" type="password" tabindex="2" :prefix-icon="Lock" size="large" show-password></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item prop="code">
             <el-input v-model.trim="loginFormData.code" placeholder="验证码" type="text" tabindex="3" :prefix-icon="Key" maxlength="7" size="large">
               <template #append>
                 <el-image :src="codeUrl" @click="createCode" draggable="false">
