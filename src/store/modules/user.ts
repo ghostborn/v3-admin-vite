@@ -8,6 +8,13 @@ import {type LoginRequestData} from "@/api/login/types/login";
 
 export const useUserStore = defineStore('user',()=>{
   const token = ref<string>(getToken() || '')
+  const roles = ref<string[]>([])
+  const username = ref<string>('')
+
+  /**设置角色数组 */
+  const setRoles = (value:string[]) =>{
+    roles.value = value
+  }
 
   /**登录*/
   const login = async ({username,password,code}:LoginRequestData)=>{
@@ -16,7 +23,15 @@ export const useUserStore = defineStore('user',()=>{
     token.value = data.token
   }
 
-  return {login}
+  /** 获取用户详情*/
+  const getInfo = async ()=>{
+    const { data } = await getUserInfoApi()
+    username.value = data.username
+    roles.value = data.roles
+  }
+
+
+  return {login,roles,setRoles,getInfo}
 })
 
 /** 在setup外使用*/

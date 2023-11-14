@@ -1,10 +1,10 @@
-import './assets/main.css'
-
+// core
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
 import App from './App.vue'
 import router from './router'
+import "@/router/permission"
+import store from "@/store";
 
 // load
 import { loadPlugins } from './plugins'
@@ -18,6 +18,8 @@ const app = createApp(App)
 loadPlugins(app)
 
 app.use(createPinia())
-app.use(router)
+app.use(store).use(router)
 
-app.mount('#app')
+router.isReady().then(()=>{
+  app.mount("#app")
+})
