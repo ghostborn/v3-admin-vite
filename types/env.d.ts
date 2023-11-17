@@ -1,4 +1,4 @@
-/** 声明 vite环境变量的类型(如果未声明则默认是any) */
+/** 声明 vite 环境变量的类型（如果未声明则默认是 any） */
 declare interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
   readonly VITE_BASE_API: string
@@ -8,10 +8,4 @@ declare interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv
-}
-
-declare module '*.vue' {
-  import type { DefineComponent } from "vue"
-  const component: DefineComponent<{}, {}, any>
-  export default component
 }

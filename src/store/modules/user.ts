@@ -30,8 +30,20 @@ export const useUserStore = defineStore('user',()=>{
     roles.value = data.roles
   }
 
+  /** 登出 */
+  const logout = ()=>{
+    token.value = ''
+    roles.value = []
+  }
 
-  return {login,roles,setRoles,getInfo}
+  /** 重置 Token */
+  const resetToken = () =>{
+    token.value = ''
+    roles.value = []
+  }
+
+
+  return {login,roles,setRoles,getInfo,logout,resetToken}
 })
 
 /** 在setup外使用*/

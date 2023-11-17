@@ -46,6 +46,22 @@ export const constantRoutes: RouteRecordRaw[] = [
   }
 ]
 
+/**
+ * 动态路由
+ * 用来放置有权限 (Roles 属性) 的路由
+ * 必须带有 Name 属性
+ */
+export const asyncRoutes: RouteRecordRaw[] = [
+  {
+    path: "/:pathMatch(.*)*", // Must put the 'ErrorPage' route at the end, 必须将 'ErrorPage' 路由放在最后
+    redirect: "/404",
+    name: "ErrorPage",
+    meta: {
+      hidden: true
+    }
+  }
+]
+
 const router = createRouter({
   history,
   routes: constantRoutes
