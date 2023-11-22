@@ -1,9 +1,11 @@
 <script setup lang="ts">
-
+import LeftMode from './LeftMode.vue';
 </script>
 
 <template>
-  <div>111111111</div>
+  <div>
+    <LeftMode/>
+  </div>
 </template>
 
 <style scoped>
