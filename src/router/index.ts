@@ -1,5 +1,6 @@
 import {type RouteRecordRaw, createRouter} from "vue-router";
 import {history} from "@/router/helper";
+import routeSettings from "@/config/route";
 
 const Layouts = ()=> import("@/layouts/index.vue")
 /**
@@ -19,6 +20,21 @@ export const constantRoutes: RouteRecordRaw[] = [
         component: ()=> import("@/views/redirect/index.vue")
       }
     ]
+  },
+  {
+    path: "/403",
+    component: () => import("@/views/error-page/403.vue"),
+    meta: {
+      hidden: true
+    }
+  },
+  {
+    path: "/404",
+    component: () => import("@/views/error-page/404.vue"),
+    meta: {
+      hidden: true
+    },
+    alias: "/:pathMatch(.*)*"
   },
   {
     path: "/login",
@@ -43,7 +59,23 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
-  }
+  },
+  {
+    path: "/unocss",
+    component: Layouts,
+    redirect: "/unocss/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/unocss/index.vue"),
+        name: "UnoCSS",
+        meta: {
+          title: "UnoCSS",
+          svgIcon: "unocss"
+        }
+      }
+    ]
+  },
 ]
 
 /**

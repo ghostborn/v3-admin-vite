@@ -4,7 +4,9 @@ import { type ConfigEnv, type UserConfigExport, loadEnv } from "vite"
 import path, { resolve } from "path"
 import vue from "@vitejs/plugin-vue"
 import vueJsx from "@vitejs/plugin-vue-jsx"
-
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
+import svgLoader from "vite-svg-loader"
+import UnoCSS from "unocss/vite"
 
 /** 配置项文档：https://cn.vitejs.dev/config */
 export default (configEnv: ConfigEnv): UserConfigExport => {
@@ -77,6 +79,15 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
     plugins: [
       vue(),
       vueJsx(),
-    ],
+      /** 将 SVG 静态图转化为 Vue 组件 */
+      svgLoader({ defaultImport: "url" }),
+      /** SVG */
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(process.cwd(), "src/icons/svg")],
+        symbolId: "icon-[dir]-[name]"
+      }),
+      /** unocss */
+      UnoCSS()
+    ]
   }
 }

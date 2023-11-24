@@ -7,9 +7,11 @@ import "@/router/permission"
 
 
 // load
+import { loadSvg } from "@/icons"
 import { loadPlugins } from './plugins'
 
 //css
+import "uno.css"
 import 'normalize.css'
 import 'element-plus/dist/index.css'
 import '@/styles/index.scss'
@@ -18,9 +20,10 @@ const app = createApp(App)
 
 /** 加载插件 */
 loadPlugins(app)
+/** 加载全局 SVG */
+loadSvg(app)
 
 app.use(store).use(router)
-
 router.isReady().then(()=>{
   app.mount("#app")
 })

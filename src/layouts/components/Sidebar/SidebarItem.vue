@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from "vue"
 import { type RouteRecordRaw } from "vue-router"
 import SidebarItemLink from "./SidebarItemLink.vue"
@@ -89,8 +89,7 @@ const resolvePath = (routePath: string) => {
           :is-collapse="props.isCollapse"
           :is-first-level="false"
           :base-path="resolvePath(child.path)"
-        >
-        </sidebar-item>
+        />
       </template>
     </el-sub-menu>
   </div>
@@ -102,11 +101,13 @@ const resolvePath = (routePath: string) => {
   margin-right: 12px;
   font-size: 18px;
 }
+
 .el-icon {
   width: 1em;
   margin-right: 12px;
   font-size: 18px;
 }
+
 .simple-mode {
   &.first-level {
     :deep(.el-sub-menu) {
