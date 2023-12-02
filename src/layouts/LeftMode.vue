@@ -3,7 +3,7 @@ import { computed } from "vue"
 import { storeToRefs } from "pinia"
 import { useAppStore } from "@/store/modules/app"
 import { useSettingsStore } from "@/store/modules/settings"
-import { AppMain, Sidebar } from "./components"
+import { AppMain, Sidebar, TagsView } from "./components"
 import { DeviceEnum } from "@/constants/app-key"
 
 const appStore = useAppStore()
@@ -35,6 +35,7 @@ const handleClickOutside = () => {
     <Sidebar class="sidebar-container" />
     <!-- 主容器 -->
     <div :class="{ hasTagsView: showTagsView }" class="main-container">
+      <TagsView />
       <!-- 页面主体内容 -->
       <AppMain class="app-main" />
     </div>
