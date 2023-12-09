@@ -1,6 +1,7 @@
 /** 统一处理 localStorage */
 import CacheKey from "@/constants/cache-key"
 import { type SidebarOpened, type SidebarClosed } from "@/constants/app-key"
+import { type ThemeName } from "@/hooks/useTheme"
 import { type TagView } from "@/store/modules/tags-view"
 import { type LayoutSettings } from "@/config/layouts"
 
@@ -20,6 +21,15 @@ export const getSidebarStatus = () => {
 }
 export const setSidebarStatus = (sidebarStatus: SidebarOpened | SidebarClosed) => {
   localStorage.setItem(CacheKey.SIDEBAR_STATUS, sidebarStatus)
+}
+//#endregion
+
+//#region 正在应用的主题名称
+export const getActiveThemeName = () => {
+  return localStorage.getItem(CacheKey.ACTIVE_THEME_NAME) as ThemeName | null
+}
+export const setActiveThemeName = (themeName: ThemeName) => {
+  localStorage.setItem(CacheKey.ACTIVE_THEME_NAME, themeName)
 }
 //#endregion
 

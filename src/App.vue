@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import {h} from "vue"
-import { ElNotification } from "element-plus";
+import { h } from "vue"
+import { useTheme } from "@/hooks/useTheme"
+import { ElNotification } from "element-plus"
+
+const { initTheme } = useTheme()
+
+/** 初始化主题 */
+initTheme()
 
 /** 作者小心思 */
 ElNotification({
@@ -14,14 +20,10 @@ ElNotification({
   duration: 0,
   position: "bottom-right"
 })
-
-
 </script>
 
 <template>
   <RouterView />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

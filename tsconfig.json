@@ -14,7 +14,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     /** https://cn.vitejs.dev/guide/features.html#typescript-compiler-options */
-    "isolatedModules": true,
+    "isolatedModules": false,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
@@ -42,7 +42,8 @@
     "types/**/*.d.ts",
     "vite.config.ts",
     "vitest.config.ts",
-    "images.d.ts"
+    "images.d.ts",
+    "*.ts"
   ],
   /** 编译器默认排除的编译文件 */
   "exclude": ["node_modules", "dist"]

@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue"
-import {useRouter} from "vue-router"
-import {useUserStore} from "@/store/modules/user";
-import type {FormInstance, FormRules} from "element-plus"
-import {User,Lock,Key,Picture,Loading} from "@element-plus/icons-vue";
-import type {LoginRequestData} from "@/api/login/types/login";
-import {getLoginCodeApi} from "@/api/login";
+import { useRouter } from "vue-router"
+import { useUserStore } from "@/store/modules/user"
+import type { FormInstance, FormRules } from "element-plus"
+import { User, Lock, Key, Picture, Loading } from "@element-plus/icons-vue"
+import type { LoginRequestData } from "@/api/login/types/login"
+import { getLoginCodeApi } from "@/api/login"
+import ThemeSwitch from "@/components/ThemeSwitch/index.vue"
+
 
 const router = useRouter()
 /**登录表单元素的引用 */
-const loginFormRef = ref<FormInstance | null> (null)
+const loginFormRef = ref<FormInstance | null>(null)
 /**登录按钮 Loading */
 const loading = ref<boolean>(false)
 /**验证码图片 URL*/
@@ -23,64 +25,87 @@ const loginFormData: LoginRequestData = reactive({
 /** 登录表单校验规则 */
 const loginFormRules: FormRules = {
   username: [{ required: true, trigger: "blur", message: "请输入您的用户名" }],
-  password: [{ required: true, trigger: "blur", message: "请输入您的密码" }, { min: 8, max: 20, message: "密码长度在 8 到 20 个字符", trigger: "blur" }],
+  password: [
+    { required: true, trigger: "blur", message: "请输入您的密码" },
+    { min: 8, max: 20, message: "密码长度在 8 到 20 个字符", trigger: "blur" }
+  ],
   code: [{ required: true, trigger: "blur", message: "请输入验证码" }]
 }
 /**登录逻辑 */
 const handleLogin = () => {
-  loginFormRef.value?.validate((valid:boolean,fields)=>{
-    if(valid) {
-      console.log('111')
+  loginFormRef.value?.validate((valid: boolean, fields) => {
+    if (valid) {
+      console.log("111")
       loading.value = true
       useUserStore()
-          .login(loginFormData)
-          .then(()=>{
-
-            router.push({path: '/'})
-          })
-          .catch(()=>{
-            createCode()
-            loginFormData.password = ''
-          })
-          .finally(()=>{
-            loading.value = false
-          })
-    }else{
-      console.error('表单校验失败',fields)
+        .login(loginFormData)
+        .then(() => {
+          router.push({ path: "/" })
+        })
+        .catch(() => {
+          createCode()
+          loginFormData.password = ""
+        })
+        .finally(() => {
+          loading.value = false
+        })
+    } else {
+      console.error("表单校验失败", fields)
     }
   })
 }
 /**创建验证码 */
 const createCode = () => {
-  loginFormData.code = ''
-  codeUrl.value = ''
+  loginFormData.code = ""
+  codeUrl.value = ""
   getLoginCodeApi().then((res) => {
     codeUrl.value = res.data
   })
 }
 /**初始化验证码 */
 createCode()
-
-
-
 </script>
 
 <template>
   <div class="login-container">
+    <ThemeSwitch class="theme-switch" />
     <div class="login-card">
       <div class="title">
-        <img src="@/assets/layouts/logo-text-2.png"  alt=""/>
+        <img src="@/assets/layouts/logo-text-2.png" alt="" />
       </div>
       <div class="content">
         <el-form ref="loginFormRef" :model="loginFormData" :rules="loginFormRules" @keyup.enter="handleLogin">
           <el-form-item prop="username">
-            <el-input v-model.trim="loginFormData.username" placeholder="用户名" type="text" tabindex="1" :prefix-icon="User" size="large"></el-input>
+            <el-input
+              v-model.trim="loginFormData.username"
+              placeholder="用户名"
+              type="text"
+              tabindex="1"
+              :prefix-icon="User"
+              size="large"
+            ></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="loginFormData.password" placeholder="密码" type="password" tabindex="2" :prefix-icon="Lock" size="large" show-password></el-input>
+            <el-input
+              v-model="loginFormData.password"
+              placeholder="密码"
+              type="password"
+              tabindex="2"
+              :prefix-icon="Lock"
+              size="large"
+              show-password
+            ></el-input>
           </el-form-item>
           <el-form-item prop="code">
-            <el-input v-model.trim="loginFormData.code" placeholder="验证码" type="text" tabindex="3" :prefix-icon="Key" maxlength="7" size="large">
+            <el-input
+              v-model.trim="loginFormData.code"
+              placeholder="验证码"
+              type="text"
+              tabindex="3"
+              :prefix-icon="Key"
+              maxlength="7"
+              size="large"
+            >
               <template #append>
                 <el-image :src="codeUrl" @click="createCode" draggable="false">
                   <template #placeholder>
@@ -90,7 +115,7 @@ createCode()
                   </template>
                   <template #error>
                     <el-icon>
-                      <Loading/>
+                      <Loading />
                     </el-icon>
                   </template>
                 </el-image>
