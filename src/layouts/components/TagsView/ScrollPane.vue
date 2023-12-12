@@ -1,8 +1,9 @@
-<script setup lang='ts'>
+<script lang="ts" setup>
 import { ref, nextTick } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import { useSettingsStore } from "@/store/modules/settings"
 import { useRouteListener } from "@/hooks/useRouteListener"
+import Screenfull from "@/components/Screenfull/index.vue"
 import { ElScrollbar } from "element-plus"
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue"
 
@@ -98,7 +99,6 @@ const moveTo = () => {
 listenerRouteChange(() => {
   nextTick(moveTo)
 })
-
 </script>
 
 <template>
@@ -114,6 +114,7 @@ listenerRouteChange(() => {
     <el-icon class="arrow right" @click="scrollTo('right')">
       <ArrowRight />
     </el-icon>
+    <Screenfull v-if="settingsStore.showScreenfull" element=".app-main" :content="true" class="screenfull" />
   </div>
 </template>
 

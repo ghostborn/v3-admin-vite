@@ -157,8 +157,6 @@ onMounted(() => {
   initTags()
   /** 监听路由变化 */
   listenerRouteChange(async (route) => {
-    console.log('1111');
-    
     addTags(route)
   }, true)
 })

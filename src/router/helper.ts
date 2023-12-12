@@ -17,7 +17,7 @@ export const history =
 /** 路由降级（把三级及其以上的路由转化为二级路由） */
 export const flatMultiLevelRoutes = (routes: RouteRecordRaw[]) => {
   const routesMirror = cloneDeep(routes)
-  routesMirror.forEach((route:any) => {
+  routesMirror.forEach((route: any) => {
     // 如果路由是三级及其以上路由，对其进行降级处理
     isMultipleRoute(route) && promoteRouteLevel(route)
   })

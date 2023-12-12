@@ -6,6 +6,7 @@ import { type RouteLocationNormalized } from "vue-router"
 import { getVisitedViews, setVisitedViews, getCachedViews, setCachedViews } from "@/utils/cache/local-storage"
 
 export type TagView = Partial<RouteLocationNormalized>
+
 export const useTagsViewStore = defineStore("tags-view", () => {
   const { cacheTagsView } = useSettingsStore()
   const visitedViews = ref<TagView[]>(cacheTagsView ? getVisitedViews() : [])
@@ -40,8 +41,9 @@ export const useTagsViewStore = defineStore("tags-view", () => {
   //#region del
   const delVisitedView = (view: TagView) => {
     const index = visitedViews.value.findIndex((v) => v.path === view.path)
-    if (index !== -1) cachedViews.value.splice(index, 1)
+    if (index !== -1) visitedViews.value.splice(index, 1)
   }
+
   const delCachedView = (view: TagView) => {
     if (typeof view.name !== "string") return
     const index = cachedViews.value.indexOf(view.name)
@@ -73,10 +75,12 @@ export const useTagsViewStore = defineStore("tags-view", () => {
     // 保留固定的 tags
     visitedViews.value = visitedViews.value.filter((tag) => tag.meta?.affix)
   }
+
   const delAllCachedViews = () => {
     cachedViews.value = []
   }
   //#endregion
+
   return {
     visitedViews,
     cachedViews,
@@ -90,3 +94,8 @@ export const useTagsViewStore = defineStore("tags-view", () => {
     delAllCachedViews
   }
 })
+
+/** 在 setup 外使用 */
+export function useTagsViewStoreHook() {
+  return useTagsViewStore(store)
+}
