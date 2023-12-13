@@ -1,36 +1,37 @@
-export interface CreateTableRequestData {
-  username: string
-  password: string
+import { request } from "@/utils/service"
+import * as Table from "./types/table"
+
+/** 增 */
+export function createTableDataApi(data: Table.CreateTableRequestData) {
+  return request({
+    url: "table",
+    method: "post",
+    data
+  })
 }
 
-export interface UpdateTableRequestData {
-  id: string
-  username: string
-  password?: string
+/** 删 */
+export function deleteTableDataApi(id: string) {
+  return request({
+    url: `table/${id}`,
+    method: "delete"
+  })
 }
 
-export interface GetTableRequestData {
-  /** 当前页码 */
-  currentPage: number
-  /** 查询条数 */
-  size: number
-  /** 查询参数：用户名 */
-  username?: string
-  /** 查询参数：手机号 */
-  phone?: string
+/** 改 */
+export function updateTableDataApi(data: Table.UpdateTableRequestData) {
+  return request({
+    url: "table",
+    method: "put",
+    data
+  })
 }
 
-export interface GetTableData {
-  createTime: string
-  email: string
-  id: string
-  phone: string
-  roles: string
-  status: boolean
-  username: string
+/** 查 */
+export function getTableDataApi(params: Table.GetTableRequestData) {
+  return request<Table.GetTableResponseData>({
+    url: "table",
+    method: "get",
+    params
+  })
 }
-
-export type GetTableResponseData = ApiResponseData<{
-  list: GetTableData[]
-  total: number
-}>
