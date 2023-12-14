@@ -1,30 +1,132 @@
 <script setup lang="ts">
 import { ref, reactive, watch } from "vue"
-
-import { Search, Refresh, CirclePlus, Delete, Download, RefreshRight } from "@element-plus/icons-vue"
-
+import { createTableDataApi, deleteTableDataApi, updateTableDataApi, getTableDataApi } from "@/api/table"
+import { type FormInstance, type FormRules, ElMessage, ElMessageBox } from "element-plus"
 import { type GetTableData } from "@/api/table/types/table"
+import { Search, Refresh, CirclePlus, Delete, Download, RefreshRight } from "@element-plus/icons-vue"
+import { usePagination } from "@/hooks/usePagination"
+
+defineOptions({
+  // 命名当前组件
+  name: "ElementPlus"
+})
 
 const loading = ref<boolean>(false)
+const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
 
+//#region 增
 const dialogVisible = ref<boolean>(false)
+const formRef = ref<FormInstance | null>(null)
+const formData = reactive({
+  username: "",
+  password: ""
+})
+const formRules: FormRules = reactive({
+  username: [{ required: true, trigger: "blur", message: "请输入用户名" }],
+  password: [{ required: true, trigger: "blur", message: "请输入密码" }]
+})
+const handleCreate = () => {
+  formRef.value?.validate((valid: boolean, fields) => {
+    if (valid) {
+      if (currentUpdateId.value === undefined) {
+        createTableDataApi(formData)
+          .then(() => {
+            ElMessage.success("新增成功")
+            getTableData()
+          })
+          .finally(() => {
+            dialogVisible.value = false
+          })
+      } else {
+        updateTableDataApi({
+          id: currentUpdateId.value,
+          username: formData.username
+        })
+          .then(() => {
+            ElMessage.success("修改成功")
+            getTableData()
+          })
+          .finally(() => {
+            dialogVisible.value = false
+          })
+      }
+    } else {
+      console.error("表单校验不通过", fields)
+    }
+  })
+}
 
+const resetForm = () => {
+  currentUpdateId.value = undefined
+  formData.username = ""
+  formData.password = ""
+}
+//#endregion
+
+//#region 删
+const handleDelete = (row: GetTableData) => {
+  ElMessageBox.confirm(`正在删除用户：${row.username}，确认删除？`, "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning"
+  }).then(() => {
+    deleteTableDataApi(row.id).then(() => {
+      ElMessage.success("删除成功")
+      getTableData()
+    })
+  })
+}
+//#endregion
+
+//#region 改
+const currentUpdateId = ref<undefined | string>(undefined)
+const handleUpdate = (row: GetTableData) => {
+  currentUpdateId.value = row.id
+  formData.username = row.username
+  dialogVisible.value = true
+}
+
+//#endregion
+
+//#region 查
+const tableData = ref<GetTableData[]>([])
+const searchFormRef = ref<FormInstance | null>(null)
 const searchData = reactive({
   username: "",
   phone: ""
 })
 
-const tableData = ref<GetTableData[]>([])
+const getTableData = () => {
+  loading.value = true
+  getTableDataApi({
+    currentPage: paginationData.currentPage,
+    size: paginationData.pageSize,
+    username: searchData.username || undefined,
+    phone: searchData.phone || undefined
+  })
+    .then((res) => {
+      paginationData.total = res.data.total
+      tableData.value = res.data.list
+    })
+    .catch(() => {
+      tableData.value = []
+    })
+    .finally(() => {
+      loading.value = false
+    })
+}
 
-function handleSearch() {}
+const handleSearch = () => {
+  paginationData.currentPage === 1 ? getTableData() : (paginationData.currentPage = 1)
+}
+const resetSearch = () => {
+  searchFormRef.value?.resetFields()
+  handleSearch()
+}
+//#endregion
 
-function resetSearch() {}
-
-function getTableData() {}
-
-function handleUpdate() {}
-
-function handleDelete() {}
+/** 监听分页参数的变化 */
+watch([() => paginationData.currentPage, () => paginationData.pageSize], getTableData, { immediate: true })
 </script>
 
 <template>
@@ -88,12 +190,36 @@ function handleDelete() {}
       <div class="pager-wrapper">
         <el-pagination
           background
-          :layout=""
-        
+          :layout="paginationData.layout"
+          :page-sizes="paginationData.pageSizes"
+          :total="paginationData.total"
+          :page-size="paginationData.pageSize"
+          :currentPage="paginationData.currentPage"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
         />
-          
       </div>
     </el-card>
+    <!-- 新增/修改 -->
+    <el-dialog
+      v-model="dialogVisible"
+      :title="currentUpdateId === undefined ? '新增用户' : '修改用户'"
+      @close="resetForm"
+      width="30%"
+    >
+      <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px" label-position="left">
+        <el-form-item prop="username" label="用户名">
+          <el-input v-model="formData.username" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item prop="password" label="密码" v-if="currentUpdateId === undefined">
+          <el-input v-model="formData.password" placeholder="请输入" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleCreate">确认</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -108,5 +234,12 @@ function handleDelete() {}
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+.table-wrapper {
+  margin-bottom: 20px;
+}
+.pager-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
