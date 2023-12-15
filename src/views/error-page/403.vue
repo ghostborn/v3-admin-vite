@@ -1,12 +1,10 @@
-<script setup lang='ts'>
-import { ref, reactive } from 'vue'
-
+<script setup lang="ts">
+import ErrorPageLayout from "./components/ErrorPageLayout.vue"
+import Svg403 from "@/assets/error-page/403.svg?component" // vite-svg-loader 插件的功能
 </script>
 
 <template>
-  <div></div>
+  <ErrorPageLayout>
+    <Svg403 />
+  </ErrorPageLayout>
 </template>
-
-<style lang='scss' scoped>
-
-</style>

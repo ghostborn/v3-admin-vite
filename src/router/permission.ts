@@ -4,28 +4,26 @@ import { usePermissionStoreHook } from "@/store/modules/permission"
 import { ElMessage } from "element-plus"
 import { setRouteChange } from "@/hooks/useRouteListener"
 import { useTitle } from "@/hooks/useTitle"
-
 import { getToken } from "@/utils/cache/cookies"
+import { fixBlankPage } from "@/utils/fix-blank-page"
 import routeSettings from "@/config/route"
 import isWhiteList from "@/config/white-list"
-
 import NProgress from "nprogress"
 import "nprogress/nprogress.css"
 
-const { setTile } = useTitle()
-
+const { setTitle } = useTitle()
 NProgress.configure({ showSpinner: false })
 
 router.beforeEach(async (to, _from, next) => {
+  fixBlankPage()
   NProgress.start()
   const userStore = useUserStoreHook()
   const permissionStore = usePermissionStoreHook()
   const token = getToken()
-  console.log(token, "token")
 
   // 判断该用户是否已经登录
   if (!token) {
-    // 如果在免登录的白名单中, 则直接进入
+    // 如果在免登录的白名单中，则直接进入
     if (isWhiteList(to)) {
       next()
     } else {
@@ -42,7 +40,7 @@ router.beforeEach(async (to, _from, next) => {
     return next({ path: "/" })
   }
 
-  //如果用户已经获得其权限角色
+  // 如果用户已经获得其权限角色
   if (userStore.roles.length !== 0) return next()
 
   // 否则要重新获取权限角色
@@ -51,10 +49,10 @@ router.beforeEach(async (to, _from, next) => {
       // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
       await userStore.getInfo()
       const roles = userStore.roles
-      // 根据角色生成可访问的 Routes(可访问路由 = 常驻路由 + 有访问权限的动态路由)
+      // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
       permissionStore.setRoutes(roles)
     } else {
-      // 没有开启动态路由功能， 则启用默认角色
+      // 没有开启动态路由功能，则启用默认角色
       userStore.setRoles(routeSettings.defaultRoles)
       permissionStore.setRoutes(routeSettings.defaultRoles)
     }
@@ -74,6 +72,6 @@ router.beforeEach(async (to, _from, next) => {
 
 router.afterEach((to) => {
   setRouteChange(to)
-  setTile(to.meta.title)
+  setTitle(to.meta.title)
   NProgress.done()
 })

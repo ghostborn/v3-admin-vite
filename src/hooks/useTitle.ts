@@ -7,7 +7,7 @@ const VITE_APP_TITLE = import.meta.env.VITE_APP_TITLE ?? "V3 Admin Vite"
 const dynamicTitle = ref<string>("")
 
 /** 设置标题 */
-const setTile = (title?: string) => {
+const setTitle = (title?: string) => {
   dynamicTitle.value = title ? `${VITE_APP_TITLE} | ${title}` : VITE_APP_TITLE
 }
 
@@ -19,5 +19,5 @@ watch(dynamicTitle, (value, oldValue) => {
 })
 
 export function useTitle() {
-  return { setTile }
+  return { setTitle }
 }
