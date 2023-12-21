@@ -10,9 +10,9 @@ import Hamburger from "../Hamburger/index.vue"
 import Breadcrumb from "../Breadcrumb/index.vue"
 import Sidebar from "../Sidebar/index.vue"
 import Notify from "@/components/Notify/index.vue"
-import Screenfull from "@/components/Screenfull/index.vue"
 import ThemeSwitch from "@/components/ThemeSwitch/index.vue"
-
+import Screenfull from "@/components/Screenfull/index.vue"
+import SearchMenu from "@/components/SearchMenu/index.vue"
 import { DeviceEnum } from "@/constants/app-key"
 
 const router = useRouter()
@@ -44,6 +44,7 @@ const logout = () => {
     <Breadcrumb v-if="!isTop || isMobile" class="breadcrumb" />
     <Sidebar v-if="isTop && !isMobile" class="sidebar" />
     <div class="right-menu">
+      <SearchMenu class="right-menu-item" />
       <Screenfull class="right-menu-item" />
       <ThemeSwitch class="right-menu-item" />
       <Notify class="right-menu-item" />
