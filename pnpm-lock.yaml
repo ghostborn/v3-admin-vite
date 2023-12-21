@@ -53,6 +53,15 @@ dependencies:
   vue-router:
     specifier: ^4.2.5
     version: 4.2.5(vue@3.3.7)
+  vxe-table:
+    specifier: ^4.5.14
+    version: 4.5.15(vue@3.3.7)(xe-utils@3.5.14)
+  vxe-table-plugin-element:
+    specifier: ^3.1.0
+    version: 3.1.0(vxe-table@4.5.15)
+  xe-utils:
+    specifier: ^3.5.14
+    version: 3.5.14
 
 devDependencies:
   '@tsconfig/node18':
@@ -1967,6 +1976,10 @@ packages:
       domhandler: 5.0.3
       entities: 4.5.0
     dev: true
+
+  /dom-zindex@1.0.1:
+    resolution: {integrity: sha512-M/MERVDZ8hguvjl6MAlLWSLYLS7PzEyXaTb5gEeJ+SF+e9iUC0sdvlzqe91MMDHBoy+nqw7wKcUOrDSyvMCrRg==}
+    dev: false
 
   /domelementtype@1.3.1:
     resolution: {integrity: sha512-BSKB+TSpMpFI/HOxCNr1O8aMOTZ8hT3pM3GQ0w/mWRmkhEDSFJkkyzz4XQsBV44BChwGkrDfMyjVD0eA2aFV3w==}
@@ -3954,6 +3967,25 @@ packages:
       '@vue/shared': 3.3.7
       typescript: 5.2.2
 
+  /vxe-table-plugin-element@3.1.0(vxe-table@4.5.15):
+    resolution: {integrity: sha512-8vOXObtLiTjOq8WmPWadVO677rAlCR/XdjltGCd475cOahL9f6u9KC2RBXhwtKMakXxkQ86IZElApCDzBpOcjw==}
+    peerDependencies:
+      vxe-table: ^4.5.0
+    dependencies:
+      vxe-table: 4.5.15(vue@3.3.7)(xe-utils@3.5.14)
+    dev: false
+
+  /vxe-table@4.5.15(vue@3.3.7)(xe-utils@3.5.14):
+    resolution: {integrity: sha512-1QuM27wjTZConQX55u2YbyIA69u9/ny83x1cqyrmkoK622GKrY324wuOO/nsjfnbxXV5C+IDzL/MfdrvKQbznQ==}
+    peerDependencies:
+      vue: ^3.2.28
+      xe-utils: ^3.5.0
+    dependencies:
+      dom-zindex: 1.0.1
+      vue: 3.3.7(typescript@5.2.2)
+      xe-utils: 3.5.14
+    dev: false
+
   /which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
     engines: {node: '>= 8'}
@@ -3970,6 +4002,10 @@ packages:
       siginfo: 2.0.0
       stackback: 0.0.2
     dev: true
+
+  /xe-utils@3.5.14:
+    resolution: {integrity: sha512-Xq6mS8dWwHBQsQUEBXcZYSaBV0KnNLoVWd0vRRDI3nKpbNxfs/LSCK0W21g1edLFnXYfKqg7hh5dakr3RtYY0A==}
+    dev: false
 
   /yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
