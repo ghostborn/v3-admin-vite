@@ -25,7 +25,6 @@ export default () => {
       isMobile && appStore.closeSidebar(true)
     }
   }
-
   /** 监听路由变化，根据设备类型调整布局 */
   listenerRouteChange(() => {
     if (appStore.device === DeviceEnum.Mobile && appStore.sidebar.opened) {
