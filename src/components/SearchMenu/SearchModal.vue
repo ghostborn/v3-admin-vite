@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed,ref,shallowRef} from "vue"
+import { computed, ref, shallowRef } from "vue"
 import { type RouteRecordName, type RouteRecordRaw, useRouter } from "vue-router"
 import { useAppStore } from "@/store/modules/app"
 import { usePermissionStore } from "@/store/modules/permission"
@@ -17,7 +17,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  "update:modelValue":[boolean]
+  "update:modelValue": [boolean]
 }>()
 
 const appStore = useAppStore()
@@ -32,25 +32,26 @@ const resultList = shallowRef<RouteRecordRaw[]>([])
 const activeRouteName = ref<RouteRecordName | undefined>(undefined)
 /** 是否按下了上键或下键（用于解决和 mouseenter 事件的冲突） */
 const isPressUpOrDown = ref<boolean>(false)
+
 /** 控制搜索对话框宽度 */
 const modalWidth = computed(() => (appStore.device === DeviceEnum.Mobile ? "80vw" : "40vw"))
 /** 控制搜索对话框显隐 */
 const modalVisible = computed({
-  get(){
+  get() {
     return props.modelValue
   },
-  set(value: boolean){
-    emit("update:modelValue",value)
+  set(value: boolean) {
+    emit("update:modelValue", value)
   }
 })
 /** 树形菜单 */
-const menusData = computed(()=> cloneDeep(usePermissionStore().routes))
+const menusData = computed(() => cloneDeep(usePermissionStore().routes))
 
 /** 搜索（防抖） */
 const handleSearch = debounce(() => {
   const flatMenusData = flatTree(menusData.value)
   resultList.value = flatMenusData.filter((menu) =>
-      keyword.value ? menu.meta?.title?.toLocaleLowerCase().includes(keyword.value.toLocaleLowerCase().trim()) : false
+    keyword.value ? menu.meta?.title?.toLocaleLowerCase().includes(keyword.value.toLocaleLowerCase().trim()) : false
   )
   // 默认选中搜索结果的第一项
   const length = resultList.value?.length
@@ -165,18 +166,18 @@ const handleReleaseUpOrDown = () => {
 
 <template>
   <el-dialog
-      v-model="modalVisible"
-      @opened="inputRef?.focus()"
-      @closed="inputRef?.blur()"
-      @keydown.up="handleUp"
-      @keydown.down="handleDown"
-      @keydown.enter="handleEnter"
-      @keyup.up.down="handleReleaseUpOrDown"
-      :before-close="handleClose"
-      :width="modalWidth"
-      top="5vh"
-      class="search-modal__private"
-      append-to-body
+    v-model="modalVisible"
+    @opened="inputRef?.focus()"
+    @closed="inputRef?.blur()"
+    @keydown.up="handleUp"
+    @keydown.down="handleDown"
+    @keydown.enter="handleEnter"
+    @keyup.up.down="handleReleaseUpOrDown"
+    :before-close="handleClose"
+    :width="modalWidth"
+    top="5vh"
+    class="search-modal__private"
+    append-to-body
   >
     <el-input ref="inputRef" v-model="keyword" @input="handleSearch" placeholder="搜索菜单" size="large" clearable>
       <template #prefix>
@@ -188,11 +189,11 @@ const handleReleaseUpOrDown = () => {
       <p>搜索结果</p>
       <el-scrollbar ref="scrollbarRef" max-height="40vh" always>
         <SearchResult
-            ref="searchResultRef"
-            v-model="activeRouteName"
-            :list="resultList"
-            :isPressUpOrDown="isPressUpOrDown"
-            @click="handleEnter"
+          ref="searchResultRef"
+          v-model="activeRouteName"
+          :list="resultList"
+          :isPressUpOrDown="isPressUpOrDown"
+          @click="handleEnter"
         />
       </el-scrollbar>
     </template>

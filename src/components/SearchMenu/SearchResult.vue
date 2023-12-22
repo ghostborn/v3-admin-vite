@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import {computed, getCurrentInstance, onBeforeMount, onBeforeUnmount, onMounted, ref} from "vue"
-import {type RouteRecordName, type RouteRecordRaw} from "vue-router"
+<script lang="ts" setup>
+import { computed, getCurrentInstance, onBeforeMount, onBeforeUnmount, onMounted, ref } from "vue"
+import { type RouteRecordName, type RouteRecordRaw } from "vue-router"
 
 interface Props {
   modelValue: RouteRecordName | undefined
@@ -48,12 +48,12 @@ const getScrollbarHeight = () => {
   scrollbarHeight.value = Number((window.innerHeight * 0.4).toFixed(1))
 }
 
-/** 根据下标计算到顶部的距离*/
+/** 根据下标计算到顶部的距离 */
 const getScrollTop = (index: number) => {
   const currentInstance = instance?.proxy?.$refs[`resultItemRef${index}`] as HTMLDivElement[]
   if (!currentInstance) return 0
   const currentRef = currentInstance[0]
-  const scrollTop = currentRef.offsetTop + 128  // 128 = 两个 result-item （56 + 56 = 112）高度与上下 margin（8 + 8 = 16）大小之和
+  const scrollTop = currentRef.offsetTop + 128 // 128 = 两个 result-item （56 + 56 = 112）高度与上下 margin（8 + 8 = 16）大小之和
   return scrollTop > scrollbarHeight.value ? scrollTop - scrollbarHeight.value : 0
 }
 
@@ -72,28 +72,26 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", getScrollbarHeight)
 })
 
-defineExpose({getScrollTop})
-
-
+defineExpose({ getScrollTop })
 </script>
 
 <template>
   <!-- 外层 div 不能删除，是用来接收父组件 click 事件的 -->
   <div>
     <div
-        v-for="(item,index) in list"
-        :key="index"
-        :ref="`resultItemRef${index}`"
-        class="result-item"
-        :style="itemStyle(item)"
-        @mouseenter="handleMouseenter(item)"
+      v-for="(item, index) in list"
+      :key="index"
+      :ref="`resultItemRef${index}`"
+      class="result-item"
+      :style="itemStyle(item)"
+      @mouseenter="handleMouseenter(item)"
     >
-      <SvgIcon v-if="item.meta?.svgIcon" :name="item.meta.svgIcon"/>
-      <component v-else-if="item.meta?.elIcon" :is="item.meta.elIcon" class="el-icon"/>
+      <SvgIcon v-if="item.meta?.svgIcon" :name="item.meta.svgIcon" />
+      <component v-else-if="item.meta?.elIcon" :is="item.meta.elIcon" class="el-icon" />
       <span class="result-item-title">
         {{ item.meta?.title }}
       </span>
-      <SvgIcon v-if="activeRouteName && activeRouteName === item.name" name="keyboard-enter"/>
+      <SvgIcon v-if="activeRouteName && activeRouteName === item.name" name="keyboard-enter" />
     </div>
   </div>
 </template>
