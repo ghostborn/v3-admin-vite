@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue"
 import { Setting } from "@element-plus/icons-vue"
 
@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<Props>(), {
   buttonTop: 350
 })
 
-const buttonTopCss = `${props.buttonTop}px`
+const buttonTopCss = props.buttonTop + "px"
 const show = ref(false)
 </script>
 
@@ -26,14 +26,14 @@ const show = ref(false)
 </template>
 
 <style lang="scss" scoped>
-.handle-button{
+.handle-button {
   width: 48px;
   height: 48px;
   background-color: var(--v3-rightpanel-button-bg-color);
   position: fixed;
-  top: v-bind(buttonTop);
+  top: v-bind(buttonTopCss);
   right: 0;
-  border-radius: 6PX 0 0 6px;
+  border-radius: 6px 0 0 6px;
   z-index: 10;
   cursor: pointer;
   pointer-events: auto;

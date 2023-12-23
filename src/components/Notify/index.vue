@@ -1,10 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, computed } from "vue"
 import { ElMessage } from "element-plus"
 import { Bell } from "@element-plus/icons-vue"
 import NotifyList from "./NotifyList.vue"
 import { type ListItem, notifyData, messageData, todoData } from "./data"
-import { dataType } from "element-plus/es/components/table-v2/src/common"
 
 type TabName = "通知" | "消息" | "待办"
 

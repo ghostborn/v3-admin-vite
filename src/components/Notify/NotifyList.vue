@@ -1,9 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { type ListItem } from "./data"
 
 interface Props {
   list: ListItem[]
 }
+
 const props = defineProps<Props>()
 </script>
 

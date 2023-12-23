@@ -1,5 +1,3 @@
-import { resolve } from "path"
-
 /** 模拟接口响应数据 */
 const SUCCESS_RESPONSE_DATA = {
   code: 0,
