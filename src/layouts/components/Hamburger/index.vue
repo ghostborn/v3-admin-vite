@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Expand, Fold } from "@element-plus/icons-vue"
 
 interface Props {

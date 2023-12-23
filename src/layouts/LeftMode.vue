@@ -35,9 +35,10 @@ const handleClickOutside = () => {
     <Sidebar class="sidebar-container" />
     <!-- 主容器 -->
     <div :class="{ hasTagsView: showTagsView }" class="main-container">
-      <div>
+      <!-- 头部导航栏和标签栏 -->
+      <div :class="{ 'fixed-header': fixedHeader }" class="layout-header">
         <NavigationBar />
-        <TagsView />
+        <TagsView v-show="showTagsView" />
       </div>
       <!-- 页面主体内容 -->
       <AppMain class="app-main" />

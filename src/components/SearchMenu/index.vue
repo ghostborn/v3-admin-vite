@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { ref, reactive } from "vue"
+<script lang="ts" setup>
+import { ref } from "vue"
 import SearchModal from "./SearchModal.vue"
 
 /** 控制 modal 显隐 */

@@ -51,4 +51,4 @@ const defaultSettings: LayoutSettings = {
 }
 
 /** 项目配置 */
-export const layoutSettings: LayoutSettings = { ...defaultSettings, ...getConfigLayout()}
+export const layoutSettings: LayoutSettings = { ...defaultSettings, ...getConfigLayout() }

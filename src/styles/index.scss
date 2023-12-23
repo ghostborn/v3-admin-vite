@@ -4,6 +4,8 @@
 @import "./transition.scss";
 // Element Plus
 @import "./element-plus.scss";
+// Vxe Table
+@import "./vxe-table.scss";
 // 注册多主题
 @import "./theme/register.scss";
 // mixin
@@ -25,7 +27,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
     sans-serif;
-  @extend %scrollbar
+  @extend %scrollbar;
 }
 
 #app {

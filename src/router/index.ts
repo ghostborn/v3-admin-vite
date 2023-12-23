@@ -1,8 +1,9 @@
 import { type RouteRecordRaw, createRouter } from "vue-router"
-import { flatMultiLevelRoutes, history } from "@/router/helper"
+import { history, flatMultiLevelRoutes } from "./helper"
 import routeSettings from "@/config/route"
 
 const Layouts = () => import("@/layouts/index.vue")
+
 /**
  * 常驻路由
  * 除了 redirect/403/404/login 等隐藏页面，其他页面建议设置 Name 属性
@@ -132,21 +133,22 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
-    path:'/menu',
-    component:Layouts,
-    redirect:'/menu/menu1',
-    name:'Menu',
-    meta:{
-      title:'多级路由',
-      svgIcon:'menu'
+    path: "/menu",
+    component: Layouts,
+    redirect: "/menu/menu1",
+    name: "Menu",
+    meta: {
+      title: "多级路由",
+      svgIcon: "menu"
     },
-    children:[
+    children: [
       {
         path: "menu1",
         component: () => import("@/views/menu/menu1/index.vue"),
+        redirect: "/menu/menu1/menu1-1",
         name: "Menu1",
         meta: {
-          title: "menu1",
+          title: "menu1"
         },
         children: [
           {
@@ -302,7 +304,7 @@ const router = createRouter({
 
 /** 重置路由 */
 export function resetRouter() {
-  // 注意:所有动态路由必须带有 Name 属性,否则可能会不能完全重置干净
+  // 注意：所有动态路由路由必须带有 Name 属性，否则可能会不能完全重置干净
   try {
     router.getRoutes().forEach((route) => {
       const { name, meta } = route

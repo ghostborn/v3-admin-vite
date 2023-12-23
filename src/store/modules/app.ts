@@ -33,13 +33,11 @@ export const useAppStore = defineStore("app", () => {
     sidebar.opened = !sidebar.opened
     sidebar.withoutAnimation = withoutAnimation
   }
-
   /** 关闭侧边栏 */
   const closeSidebar = (withoutAnimation: boolean) => {
     sidebar.opened = false
     sidebar.withoutAnimation = withoutAnimation
   }
-
   /** 切换设备类型 */
   const toggleDevice = (value: DeviceEnum) => {
     device.value = value

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from "vue"
 import { useRouter } from "vue-router"
 import { storeToRefs } from "pinia"
@@ -44,10 +44,10 @@ const logout = () => {
     <Breadcrumb v-if="!isTop || isMobile" class="breadcrumb" />
     <Sidebar v-if="isTop && !isMobile" class="sidebar" />
     <div class="right-menu">
-      <SearchMenu class="right-menu-item" />
-      <Screenfull class="right-menu-item" />
-      <ThemeSwitch class="right-menu-item" />
-      <Notify class="right-menu-item" />
+      <SearchMenu v-if="showSearchMenu" class="right-menu-item" />
+      <Screenfull v-if="showScreenfull" class="right-menu-item" />
+      <ThemeSwitch v-if="showThemeSwitch" class="right-menu-item" />
+      <Notify v-if="showNotify" class="right-menu-item" />
       <el-dropdown class="right-menu-item">
         <div class="right-menu-avatar">
           <el-avatar :icon="UserFilled" :size="30" />

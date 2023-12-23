@@ -1,4 +1,3 @@
-
 <template>
   <div class="app-container center">
     <el-empty description="Editor 权限可见" />
@@ -6,7 +5,7 @@
 </template>
 
 <style lang="scss" scoped>
-.center{
+.center {
   height: 100%;
   display: flex;
   justify-content: center;

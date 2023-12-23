@@ -1,6 +1,6 @@
 /** 清除浮动 */
-%clearfix{
-  &::after{
+%clearfix {
+  &::after {
     content: "";
     display: table;
     clear: both;
@@ -32,7 +32,7 @@
 }
 
 /** 文本溢出时显示省略号 */
-%ellipsis{
+%ellipsis {
   // 隐藏溢出的文本
   overflow: hidden;
   // 防止文本换行

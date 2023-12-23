@@ -1,5 +1,5 @@
-<script setup lang='ts'>
-import { computed } from 'vue'
+<script lang="ts" setup>
+import { computed } from "vue"
 
 interface Props {
   prefix?: string
@@ -7,11 +7,10 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  prefix: 'icon'
+  prefix: "icon"
 })
 
 const symbolId = computed(() => `#${props.prefix}-${props.name}`)
-
 </script>
 
 <template>
@@ -20,8 +19,8 @@ const symbolId = computed(() => `#${props.prefix}-${props.name}`)
   </svg>
 </template>
 
-<style lang='scss' scoped>
-.svg-icon{
+<style lang="scss" scoped>
+.svg-icon {
   width: 1em;
   height: 1em;
   fill: currentColor;

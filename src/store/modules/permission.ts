@@ -1,10 +1,10 @@
-import { ref } from "vue";
+import { ref } from "vue"
 import store from "@/store"
-import { defineStore } from "pinia";
-import { type RouteRecordRaw } from "vue-router";
-import { constantRoutes, asyncRoutes } from "@/router";
-import { flatMultiLevelRoutes } from "@/router/helper";
-import routeSettings from "@/config/route";
+import { defineStore } from "pinia"
+import { type RouteRecordRaw } from "vue-router"
+import { constantRoutes, asyncRoutes } from "@/router"
+import { flatMultiLevelRoutes } from "@/router/helper"
+import routeSettings from "@/config/route"
 
 const hasPermission = (roles: string[], route: RouteRecordRaw) => {
   const routeRoles = route.meta?.roles
@@ -42,4 +42,3 @@ export const usePermissionStore = defineStore("permission", () => {
 export function usePermissionStoreHook() {
   return usePermissionStore(store)
 }
-

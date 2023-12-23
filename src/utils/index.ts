@@ -1,8 +1,8 @@
 import dayjs from "dayjs"
-import { removeConfigLayout } from "./cache/local-storage"
+import { removeConfigLayout } from "@/utils/cache/local-storage"
 
 /** 格式化时间 */
-export const formatDataTime = (time: string | number | Date) => {
+export const formatDateTime = (time: string | number | Date) => {
   return time ? dayjs(new Date(time)).format("YYYY-MM-DD HH:mm:ss") : "N/A"
 }
 
@@ -10,6 +10,7 @@ export const formatDataTime = (time: string | number | Date) => {
 export const getCssVariableValue = (cssVariableName: string) => {
   let cssVariableValue = ""
   try {
+    // 没有拿到值时，会返回空串
     cssVariableValue = getComputedStyle(document.documentElement).getPropertyValue(cssVariableName)
   } catch (error) {
     console.error(error)

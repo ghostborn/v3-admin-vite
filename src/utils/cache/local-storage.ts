@@ -1,4 +1,5 @@
 /** 统一处理 localStorage */
+
 import CacheKey from "@/constants/cache-key"
 import { type SidebarOpened, type SidebarClosed } from "@/constants/app-key"
 import { type ThemeName } from "@/hooks/useTheme"
@@ -43,7 +44,7 @@ export const getVisitedViews = () => {
 }
 export const setVisitedViews = (views: TagView[]) => {
   views.forEach((view) => {
-    // 删除不必要的属性, 防止 JSON.stringify 处理到循环引用
+    // 删除不必要的属性，防止 JSON.stringify 处理到循环引用
     delete view.matched
     delete view.redirectedFrom
   })

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from "vue"
 import { useAppStore } from "@/store/modules/app"
 import { DeviceEnum } from "@/constants/app-key"
@@ -36,6 +36,7 @@ const isMobile = computed(() => appStore.device === DeviceEnum.Mobile)
 
 <style lang="scss" scoped>
 .search-footer {
+  display: flex;
   color: var(--el-text-color-secondary);
   font-size: 14px;
   &-item {
