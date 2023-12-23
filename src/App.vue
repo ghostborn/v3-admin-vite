@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { h } from "vue"
 import { useTheme } from "@/hooks/useTheme"
 import { ElNotification } from "element-plus"
@@ -26,6 +26,6 @@ ElNotification({
 
 <template>
   <el-config-provider :locale="zhCn">
-    <RouterView />
+    <router-view />
   </el-config-provider>
 </template>

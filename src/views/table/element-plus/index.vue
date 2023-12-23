@@ -1,8 +1,8 @@
-<script setup lang="ts">
-import { ref, reactive, watch } from "vue"
+<script lang="ts" setup>
+import { reactive, ref, watch } from "vue"
 import { createTableDataApi, deleteTableDataApi, updateTableDataApi, getTableDataApi } from "@/api/table"
-import { type FormInstance, type FormRules, ElMessage, ElMessageBox } from "element-plus"
 import { type GetTableData } from "@/api/table/types/table"
+import { type FormInstance, type FormRules, ElMessage, ElMessageBox } from "element-plus"
 import { Search, Refresh, CirclePlus, Delete, Download, RefreshRight } from "@element-plus/icons-vue"
 import { usePagination } from "@/hooks/usePagination"
 
@@ -55,7 +55,6 @@ const handleCreate = () => {
     }
   })
 }
-
 const resetForm = () => {
   currentUpdateId.value = undefined
   formData.username = ""
@@ -85,7 +84,6 @@ const handleUpdate = (row: GetTableData) => {
   formData.username = row.username
   dialogVisible.value = true
 }
-
 //#endregion
 
 //#region 查
@@ -95,7 +93,6 @@ const searchData = reactive({
   username: "",
   phone: ""
 })
-
 const getTableData = () => {
   loading.value = true
   getTableDataApi({
@@ -115,7 +112,6 @@ const getTableData = () => {
       loading.value = false
     })
 }
-
 const handleSearch = () => {
   paginationData.currentPage === 1 ? getTableData() : (paginationData.currentPage = 1)
 }
@@ -153,7 +149,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
         </div>
         <div>
           <el-tooltip content="下载">
-            <el-button type="primary" :icon="Download" circle></el-button>
+            <el-button type="primary" :icon="Download" circle />
           </el-tooltip>
           <el-tooltip content="刷新当前页">
             <el-button type="primary" :icon="RefreshRight" circle @click="getTableData" />
@@ -230,14 +226,17 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
     padding-bottom: 2px;
   }
 }
+
 .toolbar-wrapper {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
+
 .table-wrapper {
   margin-bottom: 20px;
 }
+
 .pager-wrapper {
   display: flex;
   justify-content: flex-end;
